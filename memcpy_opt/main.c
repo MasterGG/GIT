@@ -1,3 +1,12 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+
+void memcpy_unloop(char *src, char *des, int len);
+void memcpy_word(char *src, char *des, int len);
+void data_create(int len);
+
 int main()
 {
         int N;
@@ -5,7 +14,7 @@ int main()
         FILE *fp = NULL;
         clock_t start,end;
         char temp;
-
+	
         printf("input the length of string:\n");
         scanf("%d",&N);
         while(N != EOF)
@@ -15,7 +24,16 @@ int main()
                 char *ch2 = (char *)malloc(sizeof(char)*N);
                 char *ch3 = (char *)malloc(sizeof(char)*N);
                 char *ch4 = (char *)malloc(sizeof(char)*N);
-                data_create(N);
+                /*get deferent address*/
+//		char *src1 = ch1 + 1;
+//		char *src2 = ch1 + 2;
+//		char *src3 = ch1 + 3;		
+//		char *src4 = ch1 + 3;		
+//		char *src5 = ch1 + 3;		
+//		char *src6 = ch1 + 3;		
+//		char *src7 = ch1 + 3;		
+		
+		data_create(N);
                 fp = fopen("input_data.txt","r+");
                 if(!fp)
                 {
@@ -57,7 +75,7 @@ int main()
                 }
                 printf("memcpy_word cost:%d us!\n",(int)(end-start));
                 start = clock();
-                _memcpy(ch1,ch4,N);
+                memcpy(ch4, ch1, N);
                 end = clock();
         //      if(strcmp(ch1,ch3))
         //      {

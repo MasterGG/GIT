@@ -2,6 +2,8 @@
 #include<string.h>
 #include<stdlib.h>
 #include<time.h>
+#define ULONG unsigned long
+
 void memcpy_unloop(char *src,char *des,int len)
 {
 	int i;
@@ -22,52 +24,63 @@ void memcpy_unloop(char *src,char *des,int len)
 		des[len+i] = src[len+i];
 	}	
 }
-
 void memcpy_word(char *src,char *des,int len)
 {
-	int dev;
-	int rest;
-	int de,i,rr;
-	unsigned long des1;
-	
-	des1 = (long)des;
-	de = sizeof(unsigned long);    //word bit length
-	len -= (-des1) % de;
-	rr = (-des1) % de;
-	while(rr > 0)
+        unsigned long des1;
+        int dev, rest;
+        int word, i, rr;
+        des1 = (ULONG)des;
+        word = sizeof(ULONG);
+
+        /*align the destination address*/
+        while((((int)des)%word) != 0 && len != 0)
+        {
+                *(char*)des = *(char*)src;
+                des++;
+                src++;
+                len--;
+        }
+        if(((int)src)%word == 0)
+        {
+
+                /*if source address is align*/
+                while(len != 0)
+                {
+                        *(ULONG*)des = *(ULONG*)src;
+                        src += word;
+                        des += word;
+                        len -= word;
+                }
+        }
+        /*source address is unaligned*/
+        else
 	{
-		*((char *)des) = *((char *)src);
-		des++;
-		src++;
-		rr--;
-	}
-	len -= rr;	
-	dev = len / de;
-	rest = len % de;		
-	for(i = 0;i < dev;i++)
-	{
-		*((unsigned long *)des) = *((unsigned long*)src);
-		src += de;
-		des += de;
-	}
-	while(rest>0)
-	{
-		*((char *)des)= *((char *)src);
-		des++;
-		src++;
-		rest--;
+		while(len >= word)
+		{
+			int shl, shr;
+			shl = 8*(((int)src)%word);
+			shr = 8*word - shl;
+			ULONG templ, temph, temp;
+			src -= (shl/8);
+			templ = *(ULONG*)src;
+			temph = *((ULONG*)src+1);
+			temp = (templ>>shl)|(temph<<shr);
+
+			*(ULONG*)des = temp;
+			src += word;
+			des += word;
+			len -= word;
+		}
+		if(len > 0)
+		{
+			*(char*)des = *(char*)src;
+			des++;
+			src++;
+			len--;
+		}
 	}
 }
-/*did not optimized memcpy*/
-void _memcpy(char *src,char *des,int len)
-{
-	int i;
-	while(len)
-	{
-		*src++ = *des++;
-		len--;
-	}
-}
+/*=====================*/
 void data_create(int n)
 {
 	int i;
@@ -161,7 +174,7 @@ int main()
 		}
 		printf("memcpy_word cost:%d us!\n",(int)(end-start));
 		start = clock();
-		_memcpy(ch1,ch4,N);
+		memcpy(ch1,ch4,N);
 		end = clock();
 	//	if(strcmp(ch1,ch3))
 	//	{

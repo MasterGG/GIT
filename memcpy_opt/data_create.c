@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 void data_create(int n)
 {
         int i;
