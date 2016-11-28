@@ -9,9 +9,9 @@ void memcpy_word(char *src,char *des,int len)
 	src1 = (ULONG)src;
 	word = sizeof(ULONG);
 
-	printf("word=%d\n ",word);
-	printf("src=%p	src1=%d\n", src, src1);
-	printf("des=%p	des1=%d\n", des, des1);
+//	printf("word=%d\n ",word);
+//	printf("src=%p	src1=%d\n", src, src1);
+//	printf("des=%p	des1=%d\n", des, des1);
 	
 	/*align the des1tination address*/
 	while((des1%word) != 0 && len != 0)

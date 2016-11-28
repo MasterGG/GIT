@@ -82,7 +82,7 @@ int main()
 	start = clock();
 	memcpy_unloop(src2,ch2,N);
 	end = clock();
-
+	
 	/*judge the copyed data is correct*/
 	for(i = 0;i < N;i++)
 	{
@@ -92,6 +92,7 @@ int main()
 			exit(1);
 		}
 	}
+	int len1, len2;
 	printf("memcpy_unloop is correct!\n");
 	printf("2偏移：source address=%p	des address=%p\n", src2, ch2);
 
@@ -137,19 +138,15 @@ int main()
 	end = clock();
 
 	/*judge the copyed data is correct*/
-//	for(i = 0;i < N;i++)
-//	{
-//		if(src5[i] != ch2[i])
-//		{
-//			printf("memcpy_unloop is fault!\n");
-//			exit(1);
-//		}
-//	}
-	if(strcmp(src5,ch2))
+	for(i = 0;i < N;i++)
 	{
-		printf("memcpy_unloop is fault!\n");
-		exit(1);
+		if(src5[i] != ch2[i])
+		{
+			printf("memcpy_unloop is fault!\n");
+			exit(1);
+		}
 	}
+
 	printf("memcpy_unloop is correct!\n");
 	printf("5偏移：source address=%p	des address=%p\n", src5, ch2);
 	printf("5偏移：memcpy_unloop cost:%d us!\n\n",(int)(end-start));
