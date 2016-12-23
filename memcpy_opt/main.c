@@ -6,6 +6,7 @@
 void memcpy_unloop(char *src, char *des, int len);
 void memcpy_word(char *src, char *des, int len);
 void data_create(int len);
+void memcpy_neon(char *src, char *des, int len);
 
 int main()
 {
@@ -22,7 +23,7 @@ int main()
 	char *ch2 = (char *)malloc(sizeof(char)*N);
 	char *ch3 = (char *)malloc(sizeof(char)*N);
 	char *ch4 = (char *)malloc(sizeof(char)*N);
-//	char *ch5 = (char *)malloc(sizeof(char)*N);
+	char *ch5 = (char *)malloc(sizeof(char)*N);
 	/*get deferent address*/
 	
 	data_create(N);
@@ -68,18 +69,18 @@ int main()
 	printf("memcpy_word cost:%d us!\n",(int)(end-start));
 
 /*-----------memcpy_neon test running time--------*/
-//	start = clock();
-//	memcpy_neon(ch1, ch5, N);
-//	end = clock();
-//	for(i = 0;i < N;i++)
-//	{
-//		if(ch1[i] != ch5[i])
-//		{
-//			printf("memcpy_neon is fault!\n");
-//			exit(1);
-//		}
-//	}
-//	printf("memcpy_neon cost:%d us!\n",(int)(end-start));
+	start = clock();
+	memcpy_neon(ch1, ch5, N);
+	end = clock();
+	for(i = 0;i < N;i++)
+	{
+		if(ch1[i] != ch5[i])
+		{
+			printf("memcpy_neon is fault!\n");
+			exit(1);
+		}
+	}
+	printf("memcpy_neon cost:%d us!\n",(int)(end-start));
 /*-----------memcpy test running time------------*/
 	start = clock();
 	memcpy(ch4, ch1, N);
@@ -91,14 +92,14 @@ int main()
 	free(ch2);
 	free(ch3);
 	free(ch4);
-//	free(ch5);
+	free(ch5);
 	fclose(fp);
 	fp = NULL;
 	ch1 = NULL;
 	ch2 = NULL;
 	ch3 = NULL;
 	ch4 = NULL;
-//	ch5 = NULL;
+	ch5 = NULL;
         return 0;
 }
 

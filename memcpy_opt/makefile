@@ -1,16 +1,19 @@
 CXX :=gcc
 CXX_FLAGS :=
-ARM_CXX := armv7a-mediatek451_001_vfp-linux-gnueabi-gcc
+ARM_CXX := aarch64-linux-android-gcc
 ARM_CXX_FLAGS := -mfloat-abi=softfp -mfpu=neon
+
+#ARM_CXX := $(CXX)
+#ARM_CXX_FLAGS := $(CXX_FLAGS)
 
 all : memcpy test
 .PHONY : all
 
-memcpy : main.o data_create.o memcpy_unloop.o memcpy_word.o 
-	$(ARM_CXX) $(ARM_CXX_FLAGS)  -o memcpy main.o data_create.o memcpy_unloop.o memcpy_word.o 
+memcpy : main.o data_create.o memcpy_unloop.o memcpy_word.o memcpy_neon.o 
+	$(ARM_CXX) $(ARM_CXX_FLAGS)  -o memcpy main.o data_create.o memcpy_unloop.o memcpy_word.o memcpy_neon.o
 
-test : test.o data_create.o memcpy_unloop.o 
-	$(ARM_CXX) $(ARM_CXX_FLAGS) -o test data_create.o memcpy_unloop.o test.o
+test : test.o data_create.o memcpy_unloop.o memcpy_neon.o
+	$(ARM_CXX) $(ARM_CXX_FLAGS) -o test data_create.o memcpy_unloop.o test.o memcpy_neon.o
 
 test.o :test.c
 	$(ARM_CXX) $(ARM_CXX_FLAGS) -c test.c
@@ -26,6 +29,8 @@ memcpy_unloop.o :memcpy_unloop.c
 memcpy_word.o :memcpy_word.c
 	$(ARM_CXX) $(ARM_CXX_FLAGS) -c memcpy_word.c
 
+memcpy_neon.o :memcpy_neon.c
+	$(ARM_CXX)
 .PHONY : clean
 clean:
 	rm *.o input_data.txt memcpy test

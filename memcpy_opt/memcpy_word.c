@@ -21,6 +21,7 @@ void memcpy_word(char *src,char *des,int len)
 		src1++;
 		len--;
 	}
+	
 	if(src1%word == 0)
 	{
 	

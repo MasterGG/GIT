@@ -3,8 +3,8 @@
 
 void memcpy_neon(char *src, char *des, int len)
 {
-	int8_t *src1 = (int8_t*)src;
-	int8_t *des1 = (int8_t*)des;
+	int8_t src1 = (int8_t)src;
+	int8_t des1 = (int8_t)des;
 	int8x16_t vec;
 	int i;
 	int temp = len % 16;
@@ -13,8 +13,8 @@ void memcpy_neon(char *src, char *des, int len)
 	/*use neon */
 	for(i = 0; i < len1; i += 16)
 	{
-		vec = vld1q_s8(src1);
-		vst1q_s8(des1, vec);
+		vec = vld1q_s8((int8_t*)src1);
+		vst1q_s8((int8_t*)des1, vec);
 		src1 += 16;
 		des1 =+ 16;
 	}
