@@ -2,6 +2,8 @@
 
 int islandPerimeter(int** grid, int gridRowSize, int gridColSize) 
 {
+	printf("grid==%d\n",grid);
+	printf("*gird==%d\n",*grid);
         int sum = 0;
 	int i, j;
 	int temp[gridRowSize][gridColSize];
@@ -9,7 +11,7 @@ int islandPerimeter(int** grid, int gridRowSize, int gridColSize)
         {
 		for(j = 0; j < gridColSize; j++)
 		{
-			temp[i][j] = *(grid++);
+			temp[i][j] = *((int *)grid + i*gridColSize +j);
 			printf("%d\t",temp[i][j]);
 		}
 		printf("\n");
@@ -48,7 +50,9 @@ int main()
 {
 	int dd[][4]= {{0,1,0,0},{1,1,1,0},{0,1,0,0},{1,1,0,0}};
 	int re;
-	re = islandPerimeter(*dd, 4, 4);
+	printf("dd==%d\n",dd);
+	printf("*dd==%d\n",(int *)dd);
+	re = islandPerimeter((int **)dd, 4, 4);
 	printf("%d \n", re);
 	return 0;
 }
