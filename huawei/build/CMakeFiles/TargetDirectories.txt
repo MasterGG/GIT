@@ -1,0 +1,3 @@
+/home/csr/huawei/build/CMakeFiles/rebuild_cache.dir
+/home/csr/huawei/build/CMakeFiles/edit_cache.dir
+/home/csr/huawei/build/CMakeFiles/cdn.dir

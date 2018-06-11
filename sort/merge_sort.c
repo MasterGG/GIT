@@ -2,35 +2,37 @@
 #include<time.h>
 void merge(int *a,int p,int q,int r)
 {
-	int n1,n2;
-	n1=q-p+1;
-	n2=r-q;
+	int left_lengh,right_length;
+	left_lengh =q-p+1;
+	right_length=r-q;
 	int i,j;
-	int c1[n1+1];
-	int c2[n2+1];
-	for(i=0;i<n1;i++)
+	int Left[left_lengh+1];
+	int Right[right_length+1];
+
+	for(i=0;i<left_lengh;i++)
 	{
-		c1[i]=a[p+i-1];
+		Left[i]=a[p+i-1];
 	}
-	for(i=0;i<n2;i++)
+
+	for(i=0;i<right_length;i++)
 	{
-		c2[i]=a[q+i];
+		Right[i]=a[q+i];
 	}
-	c1[n1]=100;
-	c2[n2]=100;
+	Left  [left_lengh]=INT_MAX;
+	Right[right_length]=INT_MAX;
 	i=0;
 	j=0;
 	int k;
 	for(k=p;k<=r;k++)
 	{
-		if(c1[i]<=c2[j])
+		if(Left[i]<=Right[j])
 		{
-			a[k]=c1[i];
+			a[k]=Left[i];
 			i++;
 		}	
 		else
 		{
-			a[k]=c2[j];
+			a[k]=Right[j];
 			j++;
 		}
 	}

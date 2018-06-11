@@ -1,0 +1,1 @@
+/usr/bin/c++    -O3  -Wall    CMakeFiles/cdn.dir/cdn.cpp.o CMakeFiles/cdn.dir/deploy.cpp.o CMakeFiles/cdn.dir/io.cpp.o  -o /home/csr/huawei/bin/cdn -rdynamic 
